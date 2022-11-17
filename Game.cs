@@ -31,9 +31,15 @@ namespace ShootsAndLaddersKMC
             get { return PlayerWinCheck; }
         }
 
+        private int RollDie()
+        {
+            return random.Next(1, 7); ;
+        }
         private void PlaySingleTurn()
         {
-            KMCPlayer currentPlayer = new KMCPlayer;
+            String player;
+
+            KMCPlayer currentPlayer = new KMCPlayer(player);
 
             // dequeue the player
             if (turnQueue.IsEmpty())
@@ -43,17 +49,34 @@ namespace ShootsAndLaddersKMC
             }
             else
             {
-                currentPlayer = turnQueue.Dequeue();
-                MessageBox.Show(String.Format(" Removing Customer ID = {0}", currentPlayer));
+                player = turnQueue.Dequeue();
+                MessageBox.Show(String.Format(" Removing Customer ID = {0}", player));
                 DisplayQueue(turnQueue, listBoxPlayerTurnData);
             }
         }
 
-        private int RollDie()
+
+
+        private void DisplayQueue(KMCQueue theQueue, ListBox theListBox)
         {
-            return random.Next(1, 7); ;
+            // clear the queue
+            theListBox.Items.Clear();
+
+            // display header
+            theListBox.Items.Add("Front of the Queue");
+
+            // display the content of the queue
+            foreach (String player in theQueue)
+            {
+                theListBox.Items.Add(player);
+            }
+
+            // display footer
+            theListBox.Items.Add("Back of the Queue");
+
+            // display stats
+            theListBox.Items.Add(String.Empty);
+            theListBox.Items.Add(String.Format("Count = {0}", theQueue.Count));
         }
-
-
     }
 }
