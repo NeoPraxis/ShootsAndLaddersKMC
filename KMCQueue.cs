@@ -15,8 +15,8 @@ namespace ShootsAndLaddersKMC
         #endregion data
 
         #region properties
-        private KMCNode Front { get; set; }     // pointer to front of the queue
-        private KMCNode Back { get; set; }      // pointer to back of the queue
+        public KMCNode Front { get; set; }     // pointer to front of the queue
+        public KMCNode Back { get; set; }      // pointer to back of the queue
         public int Count { get; private set; }  // number of the nodes in queue
         #endregion properties
 
@@ -40,9 +40,9 @@ namespace ShootsAndLaddersKMC
         /// If the queue is empty this routine will return null.
         /// </summary>
         /// <returns></returns>
-        public String Dequeue()
+        public KMCPlayer Dequeue()
         {
-            String item;
+            KMCPlayer item;
 
             if (IsEmpty())
             {
@@ -51,7 +51,7 @@ namespace ShootsAndLaddersKMC
             else
             {
                 // queue is not empty, return first item
-                item = Front.Player;
+                item = Front.player;
                 Front = Front.Next;
                 Count--;
                 // Count -= 1;
@@ -66,11 +66,11 @@ namespace ShootsAndLaddersKMC
         /// This routine will add a customer to the back of the queue
         /// with the passed customer identifier
         /// </summary>
-        /// <param name="customerID"></param>
-        public void Enqueue(String customerID)
+        /// <param name="player"></param>
+        public void Enqueue(KMCPlayer player)
         {
             // create a node with the new data
-            KMCNode person = new KMCNode(customerID);
+            KMCNode person = new KMCNode(player);
 
             if (IsEmpty())
             {

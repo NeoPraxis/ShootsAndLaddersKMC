@@ -15,7 +15,7 @@ namespace ShootsAndLaddersKMC
         #endregion data
 
         #region properties
-        public String Player { get; set; }      // customer identifier
+        public KMCPlayer player { get; set; }      // customer identifier
         public KMCNode Next { get; set; }       // pointer to the next customer
         #endregion properties
 
@@ -24,9 +24,9 @@ namespace ShootsAndLaddersKMC
         /// This routine initializes a Customer Node using the Customer Identifier
         /// </summary>
         /// <param name="customerID"></param>
-        public KMCNode(String player)
+        public KMCNode(KMCPlayer tempPlayer)
         {
-            Player = player;
+            player = tempPlayer;
             Next = null;
         }
 
@@ -39,8 +39,8 @@ namespace ShootsAndLaddersKMC
         /// <returns></returns>
         public override string ToString()
         {
-            return String.Format("Current Player = {0}, Next Player = {1}", this.Player,
-                this.Next == null ? "end of queue" : this.Next.Player);
+            return String.Format("Current Player = {0}, Next Player = {1}", this.player.playerName,
+                this.Next == null ? "end of queue" : this.Next.player.playerName);
         }
         #endregion methods
     }
