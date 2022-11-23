@@ -22,6 +22,8 @@
  *                      - added button turn logic
  *                      - added button play game logic
  *                      - CHANGED local player, to using player class instead
+ *                      - Formatted UI results to display better
+ * 0.3  KMC  11/22/2022 - Fixed win condition to display a text box of who won
  * *******************************************************************/
 using System;
 using System.Linq;
@@ -46,6 +48,8 @@ namespace ShootsAndLaddersKMC
                                         91, 72, 73, 74, 75, 76, 77, 78, 79, 100,
                                         81, 82, 83, 84, 85, 86, 24, 88, 89, 90,
                                         91, 92, 73, 94, 75, 96, 97, 78, 99, 100};
+
+        bool winner = false;
 
         // create a turn queue for the users/players
         KMCQueue userTurnQueue = new KMCQueue();
@@ -96,7 +100,7 @@ namespace ShootsAndLaddersKMC
         /// <param name="e"></param>
         private void buttonPlayNewGame_Click(object sender, EventArgs e)
         {
-            AddPlayers();
+            AddPlayers(); 
         }
 
         /// <summary>
@@ -157,6 +161,7 @@ namespace ShootsAndLaddersKMC
                     listBoxPlayerTurnData.Items.Add(playerName);
                 }
             }
+            
         }
         /// <summary>
         /// This method displays the queue
@@ -182,6 +187,7 @@ namespace ShootsAndLaddersKMC
         public void PlayTurn()
         {
             int dieResult;
+            
             
             // create a player to be used in the queue
             KMCPlayer tempPlayer = userTurnQueue.Dequeue();
@@ -213,10 +219,17 @@ namespace ShootsAndLaddersKMC
             // Display the stats for the roll
             listBoxPlayerTurnData.Items.Add(tempPlayer.PlayerName.ToString() + " rolled a " + dieResult.ToString() + "," + " and is now at position: " + tempPlayer.CurrentPostion);
 
-            // Win check for current player
+            // Win check for current player TODO( cant figure out how to do new game correctly after win)
             if (tempPlayer.CurrentPostion == 100)
             {
+                winner = true;
                 MessageBox.Show(tempPlayer.PlayerName.ToString() + " Won the game!");
+                listBoxPlayerTurnData.Items.Clear();
+
+            }
+            else
+            {
+                winner = false;
             }
         }
         #endregion methods

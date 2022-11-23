@@ -1,4 +1,24 @@
-﻿using System;
+﻿/* ********************************************************************
+ * Projct:      Chutes and Ladders
+ * File:        KMCQueue.cs
+ * 
+ * Language:    C#
+ * 
+ * Desription:  This program will play a simple version of chutes and ladders
+ *              
+ * College:     Husson University
+ * Course:      IT 325
+ * 
+ * Edit History:
+ * Ver   Who Date       Notes
+ * ----- --- ---------- -----------------------------------------------
+ * 0.1   KMC 11/20/2022 - initial writing
+ *                      - created properties
+ *                      - wrote default constructors
+ *                      - EDITED queue to accept players and not customers
+ *    
+ * *******************************************************************/
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
