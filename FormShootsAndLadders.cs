@@ -1,4 +1,29 @@
-﻿using System;
+﻿/* ********************************************************************
+ * Projct:      Chutes and Ladders
+ * File:        FormChutesAndLadders.cs
+ * 
+ * Language:    C#
+ * 
+ * Desription:  This program will play a simple LOGICAL version of chutes and ladders (NO FANCY UI)
+ *              
+ * College:     Husson University
+ * Course:      IT 325
+ * 
+ * Edit History:
+ * Ver   Who Date       Notes
+ * ----- --- ---------- -----------------------------------------------
+ * 0.1   KMC 11/20/2022 - initial writing
+ *                      - created properties
+ *                      - wrote default constructor
+ * 0.2   KMC 11/21/2022 - added array
+ *                      - added add player logic
+ *                      - added turn logic
+ *                      - added dice logic
+ *                      - added button turn logic
+ *                      - added button play game logic
+ *                      - CHANGED local player, to using player class instead
+ * *******************************************************************/
+using System;
 using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
@@ -22,8 +47,11 @@ namespace ShootsAndLaddersKMC
                                         81, 82, 83, 84, 85, 86, 24, 88, 89, 90,
                                         91, 92, 73, 94, 75, 96, 97, 78, 99, 100};
 
-
+        // create a turn queue for the users/players
         KMCQueue userTurnQueue = new KMCQueue();
+
+
+        // TODO I could not figure out how to do the win condition correctly ***
 /*
         public bool winner()
         {
@@ -45,6 +73,10 @@ namespace ShootsAndLaddersKMC
             InitializeComponent();
         }
 
+        /// <summary>
+        /// This method rolls dice and returns the value of the dice
+        /// </summary>
+        /// <returns></returns>
         private int RollDice()
         {
             Random rnd = new Random();
@@ -57,12 +89,6 @@ namespace ShootsAndLaddersKMC
         #endregion properties
 
         #region events
-
-
-        private void FormShootsAndLadders_Load(object sender, EventArgs e)
-        {
-
-        }
         /// <summary>
         /// This button starts a new game upon click
         /// </summary>
@@ -86,12 +112,15 @@ namespace ShootsAndLaddersKMC
 
         #region methods
 
+        /// <summary>
+        /// This method adds players to the player turn queue
+        /// </summary>
         public void AddPlayers()
         {
 
             // initialize number of users
-            string[] users = new string[6] {"p1", "p2", "p3",
-                                            "p4", "p5", "p6", };
+            string[] users = new string[6] {"Player 6", "Player 1", "Player 2",
+                                            "Player 3", "Player 4", "Player 5", };
 
             //int[] userDieData = new int[100];
 
@@ -129,41 +158,41 @@ namespace ShootsAndLaddersKMC
                 }
             }
         }
+        /// <summary>
+        /// This method displays the queue
+        /// </summary>
+        /// <param name="theTurnQueue"></param>
+        /// <param name="theListBox"></param>
         private void DisplayQueue(KMCQueue theTurnQueue, ListBox theListBox)
         {
             // clear the queue
             theListBox.Items.Clear();
 
-            // display header
-            //theListBox.Items.Add("Is Up Next: ");
-
             // display the content of the queue
-            //foreach (String player in theTurnQueue)
-            //{
+            
             theListBox.Items.Add(theTurnQueue.First());
-            //}
-
-            // display footer
-            //theListBox.Items.Add("Back of the Queue");
 
             // display stats
             theListBox.Items.Add(String.Empty);
-            //theListBox.Items.Add(String.Format("Count = {0}", theTurnQueue.Count));
         }
 
+        /// <summary>
+        /// This method plays a SINGLE turn
+        /// </summary>
         public void PlayTurn()
         {
             int dieResult;
+            
+            // create a player to be used in the queue
             KMCPlayer tempPlayer = userTurnQueue.Dequeue();
-
+          
+            // have a more accurate 
             dieResult = RollDice();
-
-
-
+            
+            // If the die result, is less than the board length, add (THIS HELPS SO YOU HAVE TO WIN WITH EXACT DIE ROLL)
             if (tempPlayer.CurrentPostion + dieResult < gameBoard.Length)
             {
-
-
+                // Update players position 
                 if (gameBoard[tempPlayer.CurrentPostion + dieResult] == 0)
                 {
                     tempPlayer.UpdatePosition(tempPlayer.CurrentPostion + dieResult);
@@ -174,31 +203,23 @@ namespace ShootsAndLaddersKMC
                     tempPlayer.UpdatePosition(gameBoard[dieResult + tempPlayer.CurrentPostion]);
                     
                 }
+                // display new results
                 DisplayQueue(userTurnQueue, listBoxPlayerTurnData);
             }
 
-            
+            // Enqueue the next player
             userTurnQueue.Enqueue(tempPlayer);
-            listBoxPlayerTurnData.Items.Add(tempPlayer.CurrentPostion).ToString();
 
+            // Display the stats for the roll
+            listBoxPlayerTurnData.Items.Add(tempPlayer.PlayerName.ToString() + " rolled a " + dieResult.ToString() + "," + " and is now at position: " + tempPlayer.CurrentPostion);
+
+            // Win check for current player
             if (tempPlayer.CurrentPostion == 100)
             {
-                MessageBox.Show("winner");
+                MessageBox.Show(tempPlayer.PlayerName.ToString() + " Won the game!");
             }
-            //playerPosition = playerPosition += dieResult;
-            //playerPosition = gameBoard[playerPosition];
-
-
-
-
-            // queue through players until win
-
-
         }
-
         #endregion methods
-
-
 
     }
 }

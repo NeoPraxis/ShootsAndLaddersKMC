@@ -46,14 +46,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Board.cs" />
     <Compile Include="FormShootsAndLadders.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="FormShootsAndLadders.Designer.cs">
       <DependentUpon>FormShootsAndLadders.cs</DependentUpon>
     </Compile>
-    <Compile Include="Game.cs" />
     <Compile Include="KMCNode.cs" />
     <Compile Include="KMCQueue.cs" />
     <Compile Include="KMCPlayer.cs" />
